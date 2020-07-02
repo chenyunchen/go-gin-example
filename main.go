@@ -44,52 +44,63 @@ func handler(c *gin.Context) {
 	resp := SuccessResp{
 		Status:        1000,
 		Message:       "success",
-		TradeID:       data.MerchantID,
+		TradeID:       uid,
 		OrderID:       data.OrderID,
 		PayURL:        "this.PayURL",
 		PayeeRealName: "Heyhey",
 	}
 
-	d, _ := json.Marshal(resp)
+	d, err := json.Marshal(resp)
+	if err != nil {
+		log.Println("Marshal", err)
+		return
+	}
 	c.Data(http.StatusAccepted, "", d)
 	go func() {
-		time.Sleep(2 * time.Second)
-		call := CallBackReq{
-			Status:        1000,
-			TradeAmount:   data.BillPrice,
-			ReceiptAmount: data.BillPrice,
-			TradeID:       data.OrderID,
-			UpstreamOrder: uid,
-			RepeatPay:     false,
-			OrderID:       data.MerchantID,
+		retryTime := 10
+		for i := 0; i < retryTime; i++ {
+			time.Sleep(5 * time.Second)
+			call := CallBackReq{
+				Status:        1000,
+				TradeAmount:   data.BillPrice,
+				ReceiptAmount: data.BillPrice,
+				TradeID:       uid,
+				UpstreamOrder: uid,
+				RepeatPay:     false,
+				OrderID:       data.OrderID,
+			}
+			callBack, err := json.Marshal(call)
+			if err != nil {
+				log.Println("Marshal", err)
+				return
+			}
+			client := &http.Client{
+				Timeout: 30 * time.Second,
+			}
+			req, err := http.NewRequest("POST", data.NotifyURL, strings.NewReader(string(callBack)))
+			if err != nil {
+				log.Println("NewRequest", err)
+			}
+			apiKey := "brsm0oofvt9ck0mpd520"
+			m := md5.New()
+			m.Write([]byte(timeStramp + apiKey))
+			s := hex.EncodeToString(m.Sum(nil))
+			req.Header.Add("X-Signature", s)
+			req.Header.Add("X-Timestamp", timeStramp)
+			resp, err := client.Do(req)
+			if err != nil {
+				log.Println("client.Do", err)
+			}
+			defer resp.Body.Close()
+			body, err := ioutil.ReadAll(resp.Body)
+			if err != nil {
+				log.Println("ioutil.ReadAll", err)
+			}
+			log.Println("order id=>", data.OrderID, "Receiver=>", string(body))
+			if string(body) == "success" {
+				break
+			}
 		}
-		callBack, err := json.Marshal(call)
-		if err != nil {
-			log.Println("Marshal", err)
-			return
-		}
-		client := &http.Client{}
-		req, err := http.NewRequest("POST", data.NotifyURL, strings.NewReader(string(callBack)))
-		if err != nil {
-			log.Println("NewRequest", err)
-		}
-		apiKey := "brsm0oofvt9ck0mpd520"
-		m := md5.New()
-		m.Write([]byte(timeStramp + apiKey))
-		s := hex.EncodeToString(m.Sum(nil))
-		req.Header.Add("X-Signature", s)
-		req.Header.Add("X-Timestamp", timeStramp)
-		resp, err := client.Do(req)
-		if err != nil {
-			log.Println("client.Do", err)
-		}
-		defer resp.Body.Close()
-		body, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			log.Println("ioutil.ReadAll", err)
-		}
-		log.Println("order id=>", data.OrderID, "Receiver=>", string(body))
-
 	}()
 
 }
