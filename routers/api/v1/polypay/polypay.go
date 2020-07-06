@@ -25,6 +25,7 @@ func ResponseOnly(c *gin.Context) {
 	status, err := strconv.Atoi(strStatus)
 	if err != nil {
 		logging.Error(err)
+		return
 	}
 	message := c.Query("message")
 
@@ -56,6 +57,7 @@ func ResponseOnly(c *gin.Context) {
 		Name:    name,
 	}
 	c.JSON(http.StatusOK, response)
+	go DepositeCallback(c, tradeID, orderID)
 }
 
 // simulate deposite handler
@@ -117,4 +119,5 @@ func Deposite(c *gin.Context) {
 		Name:    request.Info.Name,
 	}
 	c.JSON(http.StatusOK, response)
+
 }

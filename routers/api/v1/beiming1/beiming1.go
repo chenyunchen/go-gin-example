@@ -17,6 +17,7 @@ func ResponseOnly(c *gin.Context) {
 	status, err := strconv.Atoi(strStatus)
 	if err != nil {
 		logging.Error(err)
+		return
 	}
 	message := c.Query("message")
 	merchantCode := c.Query("merchant_code")
