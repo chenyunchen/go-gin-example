@@ -55,12 +55,11 @@ func DepositeCallback(c *gin.Context, tradeID, orderID string) {
 
 	for i := 1; i <= 1+retry; i++ {
 		time.Sleep(5 * time.Second)
-		resp, err := http.Post(notifyURL, "application/json", bytes.NewBuffer(byteData))
+		_, err := http.Post(notifyURL, "application/json", bytes.NewBuffer(byteData))
 		if err != nil {
 			logging.Error(err)
 			continue
 		}
-		defer resp.Body.Close()
 		break
 	}
 }
