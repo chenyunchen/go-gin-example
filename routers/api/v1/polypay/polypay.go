@@ -16,6 +16,49 @@ import (
 	"github.com/rs/xid"
 )
 
+// response only handler
+func ResponseOnly(c *gin.Context) {
+	appG := app.Gin{C: c}
+
+	// required
+	strStatus := c.Query("status")
+	status, err := strconv.Atoi(strStatus)
+	if err != nil {
+		logging.Error(err)
+	}
+	message := c.Query("message")
+
+	// if fail (option)
+	strError := c.Query("error")
+	isError, err := strconv.ParseBool(strError)
+	if err != nil {
+		logging.Error(err)
+	}
+	if isError {
+		appG.ErrResponse(http.StatusBadRequest, status, message)
+		return
+	}
+
+	// if success
+	tradeID := c.Query("trade_id")
+	orderID := c.Query("order_id")
+	payURL := c.Query("pay_url")
+	account := c.Query("account")
+	name := c.Query("name")
+
+	response := models.PolypayDepositeResponse{
+		Status:  status,
+		Message: message,
+		TradeID: tradeID,
+		OrderID: orderID,
+		PayURL:  payURL,
+		Account: account,
+		Name:    name,
+	}
+	c.JSON(http.StatusOK, response)
+}
+
+// simulate deposite handler
 func Deposite(c *gin.Context) {
 	appG := app.Gin{C: c}
 
