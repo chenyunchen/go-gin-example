@@ -1,0 +1,10 @@
+package e
+
+const (
+	SUCCESS        = 200
+	INVALID_PARAMS = 400
+	ERROR          = 500
+
+	POLYPAY_SUCCESS = 10000
+	POLYPAY_ERROR   = 40000
+)
