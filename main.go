@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/http"
-
 	"mockserver/pkg/logging"
 	"mockserver/pkg/setting"
 	"mockserver/pkg/util"
 	"mockserver/routers"
+	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,10 +22,15 @@ func init() {
 func main() {
 	gin.SetMode(setting.ServerSetting.RunMode)
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = setting.ServerSetting.HttpPort
+	}
+	endPoint := fmt.Sprintf(":%s", port)
+
 	routersInit := routers.InitRouter()
 	readTimeout := setting.ServerSetting.ReadTimeout
 	writeTimeout := setting.ServerSetting.WriteTimeout
-	endPoint := fmt.Sprintf(":%d", setting.ServerSetting.HttpPort)
 	maxHeaderBytes := 1 << 20
 
 	server := &http.Server{
