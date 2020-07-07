@@ -1,6 +1,8 @@
 package routers
 
 import (
+	"github.com/gin-gonic/gin"
+	"mockserver/pkg/logging"
 	"mockserver/routers/api/v1/bankcard"
 	"mockserver/routers/api/v1/beiming1"
 	"mockserver/routers/api/v1/beiming2"
@@ -8,14 +10,15 @@ import (
 	"mockserver/routers/api/v1/lighting3"
 	"mockserver/routers/api/v1/lighting6"
 	"mockserver/routers/api/v1/polypay"
-
-	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func InitRouter() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
+	r.GET("/", defaultHandler)
+	r.POST("/", defaultHandler)
 
 	depositeV1 := r.Group("/deposite")
 	{
@@ -37,4 +40,15 @@ func InitRouter() *gin.Engine {
 	}
 
 	return r
+}
+
+func defaultHandler(c *gin.Context) {
+	body, err := c.GetRawData()
+	if err != nil {
+		logging.Error(err)
+		return
+	}
+
+	logging.Info(string(body))
+	c.JSON(http.StatusOK, "success")
 }

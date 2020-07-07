@@ -13,14 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func DepositeCallback(c *gin.Context, tradeID, orderID string) {
-	strStatus := c.Query("status")
-	status, err := strconv.Atoi(strStatus)
-	if err != nil {
-		logging.Error(err)
-		return
-	}
-
+func DepositeCallback(c *gin.Context, status int, tradeID, orderID string) {
 	tradeAmount := c.Query("trade_amount")
 	receiptAmount := c.Query("receipt_amount")
 	upstreamOrder := c.Query("upstream_amount")
@@ -28,7 +21,6 @@ func DepositeCallback(c *gin.Context, tradeID, orderID string) {
 	repeatPay, err := strconv.ParseBool(strRepeatPay)
 	if err != nil {
 		logging.Error(err)
-		return
 	}
 
 	request := models.PolypayDepositeCallbackRequest{
@@ -43,7 +35,6 @@ func DepositeCallback(c *gin.Context, tradeID, orderID string) {
 	byteData, err := json.Marshal(request)
 	if err != nil {
 		logging.Error(err)
-		return
 	}
 
 	notifyURL := c.Query("notify_url")

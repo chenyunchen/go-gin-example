@@ -25,16 +25,12 @@ func ResponseOnly(c *gin.Context) {
 	status, err := strconv.Atoi(strStatus)
 	if err != nil {
 		logging.Error(err)
-		return
 	}
 	message := c.Query("message")
 
 	// if fail (option)
 	strError := c.Query("error")
-	isError, err := strconv.ParseBool(strError)
-	if err != nil {
-		logging.Error(err)
-	}
+	isError, _ := strconv.ParseBool(strError)
 	if isError {
 		appG.ErrResponse(http.StatusBadRequest, status, message)
 		return
@@ -57,7 +53,7 @@ func ResponseOnly(c *gin.Context) {
 		Name:    name,
 	}
 	c.JSON(http.StatusOK, response)
-	go DepositeCallback(c, tradeID, orderID)
+	go DepositeCallback(c, status, tradeID, orderID)
 }
 
 // simulate deposite handler

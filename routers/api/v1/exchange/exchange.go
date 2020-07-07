@@ -4,8 +4,6 @@ import (
 	"net/http"
 	"strconv"
 
-	"mockserver/pkg/logging"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,10 +14,7 @@ func ResponseOnly(c *gin.Context) {
 
 	// if fail (option)
 	strError := c.Query("error")
-	isError, err := strconv.ParseBool(strError)
-	if err != nil {
-		logging.Error(err)
-	}
+	isError, _ := strconv.ParseBool(strError)
 	if isError {
 		c.JSON(http.StatusBadRequest, body)
 		return

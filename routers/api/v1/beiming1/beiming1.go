@@ -17,7 +17,6 @@ func ResponseOnly(c *gin.Context) {
 	status, err := strconv.Atoi(strStatus)
 	if err != nil {
 		logging.Error(err)
-		return
 	}
 	message := c.Query("message")
 	merchantCode := c.Query("merchant_code")
@@ -59,10 +58,7 @@ func ResponseOnly(c *gin.Context) {
 
 	// if fail (option)
 	strError := c.Query("error")
-	isError, err := strconv.ParseBool(strError)
-	if err != nil {
-		logging.Error(err)
-	}
+	isError, _ := strconv.ParseBool(strError)
 	if isError {
 		response.Code = http.StatusBadRequest
 		c.JSON(http.StatusBadRequest, response)
