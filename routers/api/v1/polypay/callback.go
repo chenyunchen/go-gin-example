@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"net/http"
+	"net/url"
 	"strconv"
 	"time"
 
@@ -44,9 +45,14 @@ func DepositeCallback(c *gin.Context, status int, tradeID, orderID string) {
 		logging.Error(err)
 	}
 
+	v := url.Values{}
+	v.Add("time", c.Query("time"))
+	v.Add("sign", c.Query("sign"))
+	u := notifyURL + "?" + v.Encode()
+
 	for i := 1; i <= 1+retry; i++ {
 		time.Sleep(5 * time.Second)
-		_, err := http.Post(notifyURL, "application/json", bytes.NewBuffer(byteData))
+		_, err := http.Post(u, "application/json", bytes.NewBuffer(byteData))
 		if err != nil {
 			logging.Error(err)
 			continue
