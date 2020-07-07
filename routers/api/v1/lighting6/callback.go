@@ -1,4 +1,4 @@
-package polypay
+package lighting6
 
 import (
 	"bytes"
@@ -14,24 +14,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func DepositeCallback(c *gin.Context, status int, tradeID, orderID string) {
-	tradeAmount := c.Query("trade_amount")
-	receiptAmount := c.Query("receipt_amount")
+func DepositeCallback(c *gin.Context, status int, message, flashID string) {
+	merchant := c.Query("merchant")
+	payedMoney := c.Query("payed_money")
 	upstreamOrder := c.Query("upstream_order")
-	strRepeatPay := c.Query("repeat_pay")
-	repeatPay, err := strconv.ParseBool(strRepeatPay)
-	if err != nil {
-		logging.Error(err)
-	}
+	repeatPay := c.Query("repeat_pay")
+	merchantOrderID := c.Query("merchant_order_id")
 
-	request := models.PolypayDepositeCallbackRequest{
-		TradeID:       tradeID,
-		OrderID:       orderID,
-		Status:        status,
-		TradeAmount:   tradeAmount,
-		ReceiptAmount: receiptAmount,
-		UpstreamOrder: upstreamOrder,
-		RepeatPay:     repeatPay,
+	request := models.Lighting6DepositeCallbackRequest{
+		FlashID:         flashID,
+		Merchant:        merchant,
+		Status:          status,
+		PayedMoney:      payedMoney,
+		UpstreamOrder:   upstreamOrder,
+		RepeatPay:       repeatPay,
+		MerchantOrderID: merchantOrderID,
+		Message:         message,
 	}
 	byteData, err := json.Marshal(request)
 	if err != nil {

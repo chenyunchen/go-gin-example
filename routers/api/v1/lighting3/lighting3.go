@@ -41,4 +41,5 @@ func ResponseOnly(c *gin.Context) {
 
 	// if success
 	c.JSON(http.StatusOK, response)
+	go DepositeCallback(c, status, tradeID, orderID)
 }

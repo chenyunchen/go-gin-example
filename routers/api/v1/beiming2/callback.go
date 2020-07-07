@@ -1,4 +1,4 @@
-package polypay
+package beiming2
 
 import (
 	"bytes"
@@ -14,24 +14,24 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func DepositeCallback(c *gin.Context, status int, tradeID, orderID string) {
-	tradeAmount := c.Query("trade_amount")
-	receiptAmount := c.Query("receipt_amount")
-	upstreamOrder := c.Query("upstream_order")
-	strRepeatPay := c.Query("repeat_pay")
-	repeatPay, err := strconv.ParseBool(strRepeatPay)
-	if err != nil {
-		logging.Error(err)
-	}
+func DepositeCallback(c *gin.Context, merchantCode, merchantOrder, flashID string) {
+	receiptPrice := c.Query("receipt_price")
+	payedTime := c.Query("payed_time")
+	targetAccount := c.Query("target_account")
+	targetName := c.Query("target_name")
 
-	request := models.PolypayDepositeCallbackRequest{
-		TradeID:       tradeID,
-		OrderID:       orderID,
-		Status:        status,
-		TradeAmount:   tradeAmount,
-		ReceiptAmount: receiptAmount,
-		UpstreamOrder: upstreamOrder,
-		RepeatPay:     repeatPay,
+	var payInfos []models.PayInfo
+	payInfo := models.PayInfo{
+		TargetAccount: targetAccount,
+		TargetName:    targetName,
+	}
+	request := models.Beiming2DepositeCallbackRequest{
+		MerchantCode:  merchantCode,
+		MerchantOrder: merchantOrder,
+		FlashID:       flashID,
+		ReceiptPrice:  receiptPrice,
+		PayedTime:     payedTime,
+		PayInfo:       append(payInfos, payInfo),
 	}
 	byteData, err := json.Marshal(request)
 	if err != nil {

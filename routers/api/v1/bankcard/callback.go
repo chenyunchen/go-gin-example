@@ -1,4 +1,4 @@
-package polypay
+package bankcard
 
 import (
 	"bytes"
@@ -14,24 +14,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func DepositeCallback(c *gin.Context, status int, tradeID, orderID string) {
-	tradeAmount := c.Query("trade_amount")
-	receiptAmount := c.Query("receipt_amount")
-	upstreamOrder := c.Query("upstream_order")
-	strRepeatPay := c.Query("repeat_pay")
-	repeatPay, err := strconv.ParseBool(strRepeatPay)
-	if err != nil {
-		logging.Error(err)
-	}
+func WithdrawCallback(c *gin.Context, status int, message, flashID string) {
+	merchant := c.Query("merchant")
+	payedMoney := c.Query("payed_money")
+	merchantOrderID := c.Query("merchant_order_id")
+	payedTime := c.Query("payed_time")
 
-	request := models.PolypayDepositeCallbackRequest{
-		TradeID:       tradeID,
-		OrderID:       orderID,
-		Status:        status,
-		TradeAmount:   tradeAmount,
-		ReceiptAmount: receiptAmount,
-		UpstreamOrder: upstreamOrder,
-		RepeatPay:     repeatPay,
+	request := models.BankcardWithdrawCallbackRequest{
+		FlashID:         flashID,
+		Merchant:        merchant,
+		Status:          status,
+		PayedMoney:      payedMoney,
+		MerchantOrderID: merchantOrderID,
+		PayedTime:       payedTime,
+		Message:         message,
 	}
 	byteData, err := json.Marshal(request)
 	if err != nil {

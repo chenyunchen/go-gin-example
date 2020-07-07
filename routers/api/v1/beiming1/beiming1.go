@@ -25,7 +25,7 @@ func ResponseOnly(c *gin.Context) {
 	payURL := c.Query("pay_url")
 	billPrice := c.Query("bill_price")
 	cardNum := c.Query("card_num")
-	acceptNum := c.Query("accept_num")
+	acceptName := c.Query("accept_name")
 	bankName := c.Query("bank_name")
 	province := c.Query("province")
 	city := c.Query("city")
@@ -43,7 +43,7 @@ func ResponseOnly(c *gin.Context) {
 		Message:       message,
 		BillPrice:     billPrice,
 		CardNum:       cardNum,
-		AcceptName:    acceptNum,
+		AcceptName:    acceptName,
 		BankName:      bankName,
 		Province:      province,
 		City:          city,
@@ -68,4 +68,5 @@ func ResponseOnly(c *gin.Context) {
 	// if success
 	response.Code = http.StatusOK
 	c.JSON(http.StatusOK, response)
+	go DepositeCallback(c, merchantCode, merchantOrder, flashID)
 }

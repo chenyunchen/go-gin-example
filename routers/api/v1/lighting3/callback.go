@@ -1,4 +1,4 @@
-package polypay
+package lighting3
 
 import (
 	"bytes"
@@ -15,23 +15,19 @@ import (
 )
 
 func DepositeCallback(c *gin.Context, status int, tradeID, orderID string) {
+	tid := c.Query("tid")
 	tradeAmount := c.Query("trade_amount")
 	receiptAmount := c.Query("receipt_amount")
-	upstreamOrder := c.Query("upstream_order")
-	strRepeatPay := c.Query("repeat_pay")
-	repeatPay, err := strconv.ParseBool(strRepeatPay)
-	if err != nil {
-		logging.Error(err)
-	}
+	userData := c.Query("user_data")
 
-	request := models.PolypayDepositeCallbackRequest{
-		TradeID:       tradeID,
-		OrderID:       orderID,
+	request := models.Lighting3DepositeCallbackRequest{
+		Tid:           tid,
 		Status:        status,
 		TradeAmount:   tradeAmount,
 		ReceiptAmount: receiptAmount,
-		UpstreamOrder: upstreamOrder,
-		RepeatPay:     repeatPay,
+		TradeID:       tradeID,
+		OrderID:       orderID,
+		UserData:      userData,
 	}
 	byteData, err := json.Marshal(request)
 	if err != nil {

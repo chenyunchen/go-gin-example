@@ -37,4 +37,5 @@ func ResponseOnly(c *gin.Context) {
 
 	// if success
 	c.JSON(http.StatusOK, response)
+	go WithdrawCallback(c, status, message, flashID)
 }

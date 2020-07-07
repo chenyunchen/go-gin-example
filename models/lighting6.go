@@ -25,7 +25,7 @@ type Lighting6DepositeResponse struct {
 	Message   string `json:"message"`
 	FlashID   string `json:"flashid"`
 	QrCode    string `json:"qr_code"`
-	expire    string `json:"expire"`
+	Expire    string `json:"expire"`
 	PayeeName string `json:"payee_name"`
 }
 

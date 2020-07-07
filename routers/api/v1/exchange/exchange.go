@@ -22,4 +22,5 @@ func ResponseOnly(c *gin.Context) {
 
 	// if success
 	c.JSON(http.StatusOK, body)
+	go WithdrawCallback(c)
 }

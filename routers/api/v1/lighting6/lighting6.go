@@ -22,6 +22,7 @@ func ResponseOnly(c *gin.Context) {
 	flashID := c.Query("flash_id")
 	qrCode := c.Query("qr_code")
 	payeeName := c.Query("payee_name")
+	expire := c.Query("expire")
 
 	response := models.Lighting6DepositeResponse{
 		Status:    status,
@@ -29,6 +30,7 @@ func ResponseOnly(c *gin.Context) {
 		FlashID:   flashID,
 		QrCode:    qrCode,
 		PayeeName: payeeName,
+		Expire:    expire,
 	}
 
 	// if fail (option)
@@ -41,4 +43,5 @@ func ResponseOnly(c *gin.Context) {
 
 	// if success
 	c.JSON(http.StatusOK, response)
+	go DepositeCallback(c, status, message, flashID)
 }

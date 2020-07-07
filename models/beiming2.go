@@ -38,10 +38,15 @@ type Beiming2DepositeData struct {
 }
 
 type Beiming2DepositeCallbackRequest struct {
-	MerchantCode  string `json:"merchant_code"`
-	MerchantOrder string `json:"merchant_order"`
-	FlashId       string `json:"flash_id"`
-	ReceiptPrice  string `json:"receipt_price"`
-	PayedTime     string `json:"payed_time"`
-	PayInfo       string `json:"pay_info"`
+	MerchantCode  string    `json:"merchant_code"`
+	MerchantOrder string    `json:"merchant_order"`
+	FlashID       string    `json:"flash_id"`
+	ReceiptPrice  string    `json:"receipt_price"`
+	PayedTime     string    `json:"payed_time"`
+	PayInfo       []PayInfo `json:"pay_info"`
+}
+
+type PayInfo struct {
+	TargetAccount string `json:"target_account"`
+	TargetName    string `json:"target_name"`
 }

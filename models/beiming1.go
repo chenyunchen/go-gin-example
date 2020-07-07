@@ -24,3 +24,18 @@ type Beiming1DepositeData struct {
 	CreatedAt     string `json:"created_at"`
 	Remark        string `json:"remark"`
 }
+
+type Beiming1DepositeCallbackRequest struct {
+	MerchantCode  string `json:"merchant_code"`
+	MerchantOrder string `json:"merchant_order"`
+	FlashID       string `json:"flash_id"`
+	ReceiptPrice  string `json:"receipt_price"`
+	PayedTime     string `json:"payed_time"`
+	OrderType     int    `json:"order_type"`
+	OrderMode     int    `json:"order_mode"`
+	UserLevel     int    `json:"user_level"`
+	TargetAccount string `json:"target_account"`
+	TargetName    string `json:"target_name"`
+	TradeTime     string `json:"trade_time"`
+	RepeatPay     string `json:"repeat_pay"`
+}
