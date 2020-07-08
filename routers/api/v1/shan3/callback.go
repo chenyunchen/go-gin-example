@@ -1,4 +1,4 @@
-package lighting3
+package shan3
 
 import (
 	"bytes"
@@ -20,7 +20,7 @@ func DepositeCallback(c *gin.Context, status int, tradeID, orderID string) {
 	receiptAmount := c.Query("receipt_amount")
 	userData := c.Query("user_data")
 
-	request := models.Lighting3DepositeCallbackRequest{
+	request := models.Shan3DepositeCallbackRequest{
 		Tid:           tid,
 		Status:        status,
 		TradeAmount:   tradeAmount,

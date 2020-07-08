@@ -1,4 +1,4 @@
-package lighting6
+package shan6
 
 import (
 	"bytes"
@@ -21,7 +21,7 @@ func DepositeCallback(c *gin.Context, status int, message, flashID string) {
 	repeatPay := c.Query("repeat_pay")
 	merchantOrderID := c.Query("merchant_order_id")
 
-	request := models.Lighting6DepositeCallbackRequest{
+	request := models.Shan6DepositeCallbackRequest{
 		FlashID:         flashID,
 		Merchant:        merchant,
 		Status:          status,

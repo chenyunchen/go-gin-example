@@ -1,6 +1,6 @@
 package models
 
-type Lighting3DepositeResponse struct {
+type Shan3DepositeResponse struct {
 	Status  int    `json:"status"`
 	Message string `json:"message"`
 	TradeID string `json:"trade_id"`
@@ -8,7 +8,7 @@ type Lighting3DepositeResponse struct {
 	PayURL  string `json:"pay_url"`
 }
 
-type Lighting3DepositeCallbackRequest struct {
+type Shan3DepositeCallbackRequest struct {
 	Tid           string `json:"tid"`
 	Status        int    `json:"status"`
 	TradeAmount   string `json:"trade_amount"`

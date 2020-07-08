@@ -1,4 +1,4 @@
-package lighting3
+package shan3
 
 import (
 	"net/http"
@@ -23,7 +23,7 @@ func ResponseOnly(c *gin.Context) {
 	orderID := c.Query("order_id")
 	payURL := c.Query("pay_url")
 
-	response := models.Lighting3DepositeResponse{
+	response := models.Shan3DepositeResponse{
 		Status:  status,
 		Message: message,
 		TradeID: tradeID,

@@ -1,4 +1,4 @@
-package lighting6
+package shan6
 
 import (
 	"net/http"
@@ -24,7 +24,7 @@ func ResponseOnly(c *gin.Context) {
 	payeeName := c.Query("payee_name")
 	expire := c.Query("expire")
 
-	response := models.Lighting6DepositeResponse{
+	response := models.Shan6DepositeResponse{
 		Status:    status,
 		Message:   message,
 		FlashID:   flashID,

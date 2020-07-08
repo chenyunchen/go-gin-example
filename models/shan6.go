@@ -1,6 +1,6 @@
 package models
 
-type Lighting6Info struct {
+type Shan6Info struct {
 	UserID     string `json:"user_id"`
 	DeviceIP   string `json:"device_ip"`
 	DeviceID   string `json:"device_id"`
@@ -11,16 +11,16 @@ type Lighting6Info struct {
 	AliName    string `json:"ali_name,omitempty"`
 }
 
-type Lighting6DepositeRequest struct {
-	MerchantID string        `json:"merchant_id"`
-	OrderID    string        `json:"order_id"`
-	NotifyUrl  string        `json:"notify_url"`
-	BillPrice  string        `json:"bill_price"`
-	Extra      string        `json:"extra,omitempty"`
-	Info       Lighting6Info `json:"info"`
+type Shan6DepositeRequest struct {
+	MerchantID string    `json:"merchant_id"`
+	OrderID    string    `json:"order_id"`
+	NotifyUrl  string    `json:"notify_url"`
+	BillPrice  string    `json:"bill_price"`
+	Extra      string    `json:"extra,omitempty"`
+	Info       Shan6Info `json:"info"`
 }
 
-type Lighting6DepositeResponse struct {
+type Shan6DepositeResponse struct {
 	Status    int    `json:"status"`
 	Message   string `json:"message"`
 	FlashID   string `json:"flashid"`
@@ -29,7 +29,7 @@ type Lighting6DepositeResponse struct {
 	PayeeName string `json:"payee_name"`
 }
 
-type Lighting6DepositeCallbackRequest struct {
+type Shan6DepositeCallbackRequest struct {
 	FlashID         string `json:"flashid"`
 	Merchant        string `json:"merchant"`
 	Status          int    `json:"status"`
