@@ -1,7 +1,7 @@
 package models
 
 type Lighting6Info struct {
-	UserId     string `json:"user_id"`
+	UserID     string `json:"user_id"`
 	DeviceIP   string `json:"device_ip"`
 	DeviceID   string `json:"device_id"`
 	Name       string `json:"name,omitempty"`
@@ -13,7 +13,7 @@ type Lighting6Info struct {
 
 type Lighting6DepositeRequest struct {
 	MerchantID string        `json:"merchant_id"`
-	OrderId    string        `json:"order_id"`
+	OrderID    string        `json:"order_id"`
 	NotifyUrl  string        `json:"notify_url"`
 	BillPrice  string        `json:"bill_price"`
 	Extra      string        `json:"extra,omitempty"`
