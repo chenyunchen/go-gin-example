@@ -44,6 +44,7 @@ type Beiming2DepositeCallbackRequest struct {
 	ReceiptPrice  string    `json:"receipt_price"`
 	PayedTime     string    `json:"payed_time"`
 	PayInfo       []PayInfo `json:"pay_info"`
+	OrderFee      string    `json:"order_fee"`
 }
 
 type PayInfo struct {

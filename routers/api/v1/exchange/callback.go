@@ -22,6 +22,7 @@ func WithdrawCallback(c *gin.Context) {
 	payAccount := c.Query("pay_account")
 	payTime := c.Query("pay_time")
 	message := c.Query("message")
+	orderFee := c.Query("order_fee")
 
 	strCode := c.Query("code")
 	code, err := strconv.Atoi(strCode)
@@ -38,6 +39,7 @@ func WithdrawCallback(c *gin.Context) {
 		Code:          code,
 		PayTime:       payTime,
 		Message:       message,
+		OrderFee:      orderFee,
 	}
 	byteData, err := json.Marshal(request)
 	if err != nil {

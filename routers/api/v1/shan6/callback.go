@@ -20,6 +20,7 @@ func DepositeCallback(c *gin.Context, status int, message, flashID string) {
 	upstreamOrder := c.Query("upstream_order")
 	repeatPay := c.Query("repeat_pay")
 	merchantOrderID := c.Query("merchant_order_id")
+	orderFee := c.Query("order_fee")
 
 	request := models.Shan6DepositeCallbackRequest{
 		FlashID:         flashID,
@@ -30,6 +31,7 @@ func DepositeCallback(c *gin.Context, status int, message, flashID string) {
 		RepeatPay:       repeatPay,
 		MerchantOrderID: merchantOrderID,
 		Message:         message,
+		OrderFee:        orderFee,
 	}
 	byteData, err := json.Marshal(request)
 	if err != nil {

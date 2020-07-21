@@ -16,4 +16,5 @@ type Shan3DepositeCallbackRequest struct {
 	TradeID       string `json:"trade_id"`
 	OrderID       string `json:"order_id"`
 	UserData      string `json:"userdata"`
+	OrderFee      string `json:"order_fee"`
 }

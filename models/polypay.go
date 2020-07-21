@@ -54,4 +54,5 @@ type PolypayDepositeCallbackRequest struct {
 	ReceiptAmount string `json:"receipt_amount"` //actual cost
 	UpstreamOrder string `json:"upstream_order"` //payment number
 	RepeatPay     bool   `json:"repeat_pay"`
+	OrderFee      string `json:"order_fee"`
 }

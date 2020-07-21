@@ -41,4 +41,5 @@ type BankcardWithdrawCallbackRequest struct {
 	MerchantOrderID string `json:"merchant_order_id"`
 	PayedTime       string `json:"payed_time"`
 	Message         string `json:"message,omitempty"`
+	OrderFee        string `json:"order_fee"`
 }

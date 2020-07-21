@@ -38,4 +38,5 @@ type Beiming1DepositeCallbackRequest struct {
 	TargetName    string `json:"target_name"`
 	TradeTime     string `json:"trade_time"`
 	RepeatPay     string `json:"repeat_pay"`
+	OrderFee      string `json:"order_fee"`
 }

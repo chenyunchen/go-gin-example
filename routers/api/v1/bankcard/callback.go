@@ -19,6 +19,7 @@ func WithdrawCallback(c *gin.Context, status int, message, flashID string) {
 	payedMoney := c.Query("payed_money")
 	merchantOrderID := c.Query("merchant_order_id")
 	payedTime := c.Query("payed_time")
+	orderFee := c.Query("order_fee")
 
 	request := models.BankcardWithdrawCallbackRequest{
 		FlashID:         flashID,
@@ -28,6 +29,7 @@ func WithdrawCallback(c *gin.Context, status int, message, flashID string) {
 		MerchantOrderID: merchantOrderID,
 		PayedTime:       payedTime,
 		Message:         message,
+		OrderFee:        orderFee,
 	}
 	byteData, err := json.Marshal(request)
 	if err != nil {

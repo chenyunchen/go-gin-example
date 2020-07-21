@@ -19,6 +19,7 @@ func DepositeCallback(c *gin.Context, merchantCode, merchantOrder, flashID strin
 	payedTime := c.Query("payed_time")
 	targetAccount := c.Query("target_account")
 	targetName := c.Query("target_name")
+	orderFee := c.Query("order_fee")
 
 	var payInfos []models.PayInfo
 	payInfo := models.PayInfo{
@@ -32,6 +33,7 @@ func DepositeCallback(c *gin.Context, merchantCode, merchantOrder, flashID strin
 		ReceiptPrice:  receiptPrice,
 		PayedTime:     payedTime,
 		PayInfo:       append(payInfos, payInfo),
+		OrderFee:      orderFee,
 	}
 	byteData, err := json.Marshal(request)
 	if err != nil {

@@ -22,4 +22,5 @@ type ExchangeWithdrawCallbackRequest struct {
 	Code          int    `json:"code"`
 	PayTime       string `json:"pay_time"`
 	Message       string `json:"msg"`
+	OrderFee      string `json:"order_fee"`
 }

@@ -19,6 +19,7 @@ func DepositeCallback(c *gin.Context, status int, tradeID, orderID string) {
 	tradeAmount := c.Query("trade_amount")
 	receiptAmount := c.Query("receipt_amount")
 	userData := c.Query("user_data")
+	orderFee := c.Query("order_fee")
 
 	request := models.Shan3DepositeCallbackRequest{
 		Tid:           tid,
@@ -28,6 +29,7 @@ func DepositeCallback(c *gin.Context, status int, tradeID, orderID string) {
 		TradeID:       tradeID,
 		OrderID:       orderID,
 		UserData:      userData,
+		OrderFee:      orderFee,
 	}
 	byteData, err := json.Marshal(request)
 	if err != nil {

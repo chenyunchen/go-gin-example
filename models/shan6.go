@@ -38,4 +38,5 @@ type Shan6DepositeCallbackRequest struct {
 	RepeatPay       string `json:"repeat_pay"`
 	MerchantOrderID string `json:"merchant_order_id"`
 	Message         string `json:"message"`
+	OrderFee        string `json:"order_fee"`
 }

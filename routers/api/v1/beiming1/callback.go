@@ -38,6 +38,7 @@ func DepositeCallback(c *gin.Context, merchantCode, merchantOrder, flashID strin
 	targetName := c.Query("target_name")
 	tradeTime := c.Query("trade_time")
 	repeatPay := c.Query("repeat_pay")
+	orderFee := c.Query("order_fee")
 
 	request := models.Beiming1DepositeCallbackRequest{
 		MerchantCode:  merchantCode,
@@ -52,6 +53,7 @@ func DepositeCallback(c *gin.Context, merchantCode, merchantOrder, flashID strin
 		TargetName:    targetName,
 		TradeTime:     tradeTime,
 		RepeatPay:     repeatPay,
+		OrderFee:      orderFee,
 	}
 	byteData, err := json.Marshal(request)
 	if err != nil {
