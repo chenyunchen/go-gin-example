@@ -15,6 +15,7 @@ import (
 )
 
 func DepositeCallback(c *gin.Context, status int, tradeID, orderID string) {
+	delay, _ := strconv.Atoi(c.Query("delay"))
 	tradeAmount := c.Query("trade_amount")
 	receiptAmount := c.Query("receipt_amount")
 	upstreamOrder := c.Query("upstream_order")
@@ -53,7 +54,7 @@ func DepositeCallback(c *gin.Context, status int, tradeID, orderID string) {
 	u := notifyURL + "?" + v.Encode()
 
 	for i := 1; i <= 1+retry; i++ {
-		time.Sleep(5 * time.Second)
+		time.Sleep(time.Duration(delay) * time.Second)
 		_, err := http.Post(u, "application/json", bytes.NewBuffer(byteData))
 		if err != nil {
 			logging.Error(err)

@@ -15,6 +15,7 @@ import (
 )
 
 func DepositeCallback(c *gin.Context, merchantCode, merchantOrder, flashID string) {
+	delay, _ := strconv.Atoi(c.Query("delay"))
 	receiptPrice := c.Query("receipt_price")
 	payedTime := c.Query("payed_time")
 
@@ -73,7 +74,7 @@ func DepositeCallback(c *gin.Context, merchantCode, merchantOrder, flashID strin
 	u := notifyURL + "?" + v.Encode()
 
 	for i := 1; i <= 1+retry; i++ {
-		time.Sleep(5 * time.Second)
+		time.Sleep(time.Duration(delay) * time.Second)
 		_, err := http.Post(u, "application/json", bytes.NewBuffer(byteData))
 		if err != nil {
 			logging.Error(err)

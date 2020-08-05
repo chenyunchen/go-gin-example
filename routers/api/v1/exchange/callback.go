@@ -15,6 +15,7 @@ import (
 )
 
 func WithdrawCallback(c *gin.Context) {
+	delay, _ := strconv.Atoi(c.Query("delay"))
 	orderID := c.Query("order_id")
 	tradeNo := c.Query("trade_No")
 	serviceCharge := c.Query("service_charge")
@@ -59,7 +60,7 @@ func WithdrawCallback(c *gin.Context) {
 	u := callbackURL + "?" + v.Encode()
 
 	for i := 1; i <= 1+retry; i++ {
-		time.Sleep(5 * time.Second)
+		time.Sleep(time.Duration(delay) * time.Second)
 		_, err := http.Post(u, "application/json", bytes.NewBuffer(byteData))
 		if err != nil {
 			logging.Error(err)
