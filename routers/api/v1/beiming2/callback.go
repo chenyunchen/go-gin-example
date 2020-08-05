@@ -15,7 +15,7 @@ import (
 )
 
 func DepositeCallback(c *gin.Context, merchantCode, merchantOrder, flashID string) {
-	delay, _ := strconv.Atoi(c.Query("delay"))
+	delay, _ := strconv.Atoi(c.DefaultQuery("delay", "5"))
 	receiptPrice := c.Query("receipt_price")
 	payedTime := c.Query("payed_time")
 	targetAccount := c.Query("target_account")

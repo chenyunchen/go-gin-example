@@ -15,7 +15,7 @@ import (
 )
 
 func WithdrawCallback(c *gin.Context) {
-	delay, _ := strconv.Atoi(c.Query("delay"))
+	delay, _ := strconv.Atoi(c.DefaultQuery("delay", "5"))
 	orderID := c.Query("order_id")
 	tradeNo := c.Query("trade_No")
 	serviceCharge := c.Query("service_charge")

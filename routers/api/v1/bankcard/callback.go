@@ -15,7 +15,7 @@ import (
 )
 
 func WithdrawCallback(c *gin.Context, status int, message, flashID string) {
-	delay, _ := strconv.Atoi(c.Query("delay"))
+	delay, _ := strconv.Atoi(c.DefaultQuery("delay", "5"))
 	merchant := c.Query("merchant")
 	payedMoney := c.Query("payed_money")
 	merchantOrderID := c.Query("merchant_order_id")

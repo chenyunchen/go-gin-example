@@ -15,7 +15,7 @@ import (
 )
 
 func DepositeCallback(c *gin.Context, status int, tradeID, orderID string) {
-	delay, _ := strconv.Atoi(c.Query("delay"))
+	delay, _ := strconv.Atoi(c.DefaultQuery("delay", "5"))
 	tradeAmount := c.Query("trade_amount")
 	receiptAmount := c.Query("receipt_amount")
 	upstreamOrder := c.Query("upstream_order")
