@@ -31,9 +31,10 @@ var defaultTpl = Template{
 }
 
 type Template struct {
-	Resp         string
-	CallbackURL  string
-	CallbackBody string
+	Resp           string
+	CallbackURL    string
+	CallbackHeader string
+	CallbackBody   string
 }
 
 func main() {
@@ -55,6 +56,7 @@ func main() {
 		tpl := tplInterface.(Template)
 		respTpl, _ := template.New("resp").Parse(tpl.Resp)
 		callbackURLTpl, _ := template.New("callbackURL").Parse(tpl.CallbackURL)
+		callbackHeaderTpl, _ := template.New("callbackHeader").Parse(tpl.CallbackHeader)
 		callbackBodyTpl, _ := template.New("callbackBody").Parse(tpl.CallbackBody)
 
 		b, _ := ioutil.ReadAll(c.Request().Body)
@@ -68,6 +70,7 @@ func main() {
 		m := map[string]interface{}{
 			"query":   query,
 			"body":    body,
+			"header":  c.Request().Header,
 			"reqBody": string(b),
 		}
 		resp := bytes.Buffer{}
@@ -79,13 +82,26 @@ func main() {
 				callbackURL := bytes.Buffer{}
 				_ = callbackURLTpl.Execute(&callbackURL, m)
 
+				callbackHeader := bytes.Buffer{}
+				_ = callbackHeaderTpl.Execute(&callbackHeader, m)
+
 				callbackBody := bytes.Buffer{}
 				_ = callbackBodyTpl.Execute(&callbackBody, m)
 
 				time.Sleep(time.Duration(delay) * time.Second)
 				u, _ := url.Parse(callbackURL.String())
 				fmt.Println("callback", u)
-				resp, err := http.Post(u.String(), "application/json", bytes.NewBuffer(callbackBody.Bytes()))
+
+				// header 預設值
+				header := http.Header{
+					"Content-Type": []string{"application/json"},
+				}
+				err := json.Unmarshal(callbackHeader.Bytes(), &header)
+				fmt.Println("header", err, header)
+
+				req, _ := http.NewRequest("POST", u.String(), bytes.NewBuffer(callbackBody.Bytes()))
+				req.Header = header
+				resp, err := http.DefaultClient.Do(req)
 				fmt.Println("resp", resp, err)
 			}
 		}()

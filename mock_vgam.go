@@ -6,6 +6,11 @@ func init() {
 		CallbackURL: `{{ index .query.notify_url 0 }}` +
 			`?time={{ index .query.time 0 }}` +
 			`&sign={{ index .query.sign 0 }}`,
+		// header 首字 要大寫 ex: X-Time, X-Sign
+		CallbackHeader: `{` +
+			`"Time": ["{{ index .header.Time 0 }}"]` +
+			`,"Sign": ["{{ index .header.Sign 0 }}"]` +
+			`}`,
 		CallbackBody: `{` +
 			`"flashid":"{{.body.flashid}}"` +
 			`,"merchant":"{{ index .query.merchant 0 }}"` +
