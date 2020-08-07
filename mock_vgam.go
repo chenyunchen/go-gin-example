@@ -3,9 +3,9 @@ package main
 func init() {
 	tplMap.Store("vgam", Template{
 		Resp: `{"data":{` +
-			`"orderUID":"{{.body.orderUID}}"` +
-			`,"expectedAmount":"{{.body.expectedAmount}}"` +
-			`,"mappingAmount":"{{.body.mappingAmount}}"` +
+			`"orderUID":"{{ index .query.orderUID 0 }}"` +
+			`,"expectedAmount":"{{ index .query.expectedAmount 0 }}"` +
+			`,"mappingAmount":"{{ index .query.mappingAmount 0 }}"` +
 			`,"expiredAt":"{{ index .query.expiredAt 0 }}"` +
 			`,"qrcodeURL":"{{ index .query.qrcodeURL 0 }}"` +
 			`,"qrcodeqrcodeTrackingURL":"{{ index .query.qrcodeqrcodeTrackingURL 0 }}"` +
