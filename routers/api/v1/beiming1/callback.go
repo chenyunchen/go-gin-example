@@ -80,6 +80,8 @@ func DepositeCallback(c *gin.Context, merchantCode, merchantOrder, flashID strin
 			logging.Error(err)
 			continue
 		}
+		logging.Info("Callback POST: " + u)
+		logging.Info("Callback BODY: " + string(byteData))
 		break
 	}
 }

@@ -58,6 +58,8 @@ func DepositeCallback(c *gin.Context, status int, message, flashID string) {
 			logging.Error(err)
 			continue
 		}
+		logging.Info("Callback POST: " + u)
+		logging.Info("Callback BODY: " + string(byteData))
 		break
 	}
 }

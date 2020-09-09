@@ -6,8 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-
-	"mockserver/pkg/file"
 )
 
 type Level int
@@ -34,14 +32,14 @@ const (
 // Setup initialize the log instance
 func Setup() {
 	var err error
-	filePath := getLogFilePath()
-	fileName := getLogFileName()
-	F, err = file.MustOpen(fileName, filePath)
+	// filePath := getLogFilePath()
+	// fileName := getLogFileName()
+	// F, err = file.MustOpen(fileName, filePath)
 	if err != nil {
 		log.Fatalf("logging.Setup err: %v", err)
 	}
 
-	logger = log.New(F, DefaultPrefix, log.LstdFlags)
+	logger = log.New(log.Writer(), DefaultPrefix, log.LstdFlags)
 }
 
 // Debug output logs at debug level
